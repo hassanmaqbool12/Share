@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Share
+Exec=/usr/bin/share
+Type=Application
+Categories=Network;Utility;
+Terminal=false
+Icon=emblem-shared
+StartupWMClass=share
+

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, height=device-height">
+    <link rel="icon" href="{{url_for('static', filename='icon.svg') }}">
+    <style>
+        * {
+            font-family: Sans-serif;
+        }
+
+        body {
+            background: #222226;
+            margin: 0;
+            padding: 0;
+        }
+
+        .logo {
+            font-size: 34px;
+            font-weight: 500;
+            color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            background: transparent;
+            padding: 10px;
+        }
+
+        .container {
+            width: 100%;
+            background: #202029;
+            display: flex;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            justify-content: center;
+            align-items: center;
+            height: 90%;
+            position: absolute;
+            box-shadow: 0 0 4px rgb(69, 64, 116);
+            bottom: 0;
+        }
+
+        .form {
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form h2 {
+            margin-bottom: 3%;
+            color: #ebebeb;
+            font-weight: 400;
+        }
+
+        .input-container {
+            position: relative;
+            width: 90%;
+            margin: 5% 0;
+        }
+
+        .input-container input {
+            width: 90%;
+            padding: 10px;
+            font-size: 16px;
+            color: #ebebeb;
+            border: 2px solid #888888;
+            border-radius: 8px;
+            background: transparent;
+            outline: none;
+        }
+
+        .input-container label {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            color: white;
+            font-size: 16px;
+            background: #202029;
+            transition: all 0.3s ease;
+        }
+        
+        .input-container input:focus ~ label,
+        .input-container input:not(:placeholder-shown) ~ label {
+            top: -8px;
+            left:8px;
+            font-size: 16px;
+            color: #7676c4;
+            padding: 0 5px;
+            
+        }
+        
+        .input-container input:focus {
+            border-color: #7676c4;
+            background:transparent
+        }
+
+        .form button {
+            width: 88%;
+            padding: 12px;
+            margin: 0%;
+            background-color: #7676c4;
+            border: 2px solid #7676c4;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            transition:all 0.1s ease-out
+        }
+
+        .form button:active {
+            background: transparent;
+        }
+
+        .switch {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ebebeb;
+        }
+
+        #spinner {
+            background-color:transparent;
+            height:37px;
+            width:40px;
+        }
+        
+        #b1 {
+            background-color:white;
+            height:13px;
+            width:13px;
+            position:relative;
+            left:32%;
+            border:none;
+            border-radius:2px;
+            animation:h 1s infinite
+         }
+         
+         #b2 {
+            background-color:white; 
+            height:13px;
+            width:13px;
+            position:relative;
+            border:none;
+            border-radius:2px;
+            animation: i 1s infinite
+         }
+         
+         @keyframes h {
+             0% {
+                 left:32%;
+                 top:0%;
+             }
+             
+             25% {
+                  left:32%;
+                  top:35%
+             }
+             
+             50% {
+                  left:0%;
+                  top:35%
+             }
+             
+             75% {
+                 left:0%;
+                 top:0%
+             }
+             
+             100% {
+                 left:32%;
+                 top:0%
+             }
+                        
+             
+         }
+         
+         @keyframes i {
+             0% {left:0%;
+                 top:0%;
+             }
+             
+             25% {left:0%;
+                  top:-35%
+             }
+             
+             50% {left:32%;
+                  top:-35%
+             }
+             
+             75% {
+                 left:32%;
+                 top:0%
+             }
+             
+             100% {
+                 left:0%;
+                 top:0%
+             }        
+             
+         }
+
+         .left {
+           width:100%;
+           display:flex;
+           justify-content:left;
+           align-items:center
+       }
+       
+       .center {
+           width:100%;
+           display:flex;
+           justify-content:center;
+           align-items:center
+       }
+       
+       .right {
+           width:100%;
+           display:flex;
+           justify-content:right;
+           align-items:center
+       }
+
+        .switch a {
+            color: #49495f;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .switch a:hover {
+            text-decoration: underline;
+        }
+        
+        .verify p {
+            font-size:13px;
+            text-align: left;
+        }
+
+        .msgbox {
+            background-color: #727272;
+            width:70%;
+            max-width: 400px;
+            height:auto;
+            max-height: 80%;
+            border-radius: 10px;
+            padding: 2%;
+            transition: all 0.9s ease-in-out;
+            }
+            
+        #updates {
+            transform: translateX(250%);
+        }
+
+        .buttons {
+            border: 2px solid rgb(51, 51, 51);
+            background-color: transparent;
+            color: #ffffff;
+            border-radius: 40px;
+            font-size: 15px;
+            padding:4%;
+            margin: 2%;
+            transition: all 0.1s ease-in-out
+        }
+           
+            #box h1 {
+                color:#ebebeb;
+                font-weight:400;
+                font-size:16px;
+                text-align: left;
+            }
+
+            #box i {
+              font-size: 24px;
+              margin-right: 3%;
+              margin-left: 3%;
+            }
+
+            #map {
+                width: 100%;
+                height: 400px;
+                border-radius: 20px;
+            }
+
+            .msg {
+                position: absolute;
+                top: 0%;
+                width: 96%;
+                height: fit-content;
+                left: 0%;
+                scale: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 16px 10px;
+                z-index: 15;
+                transition: all 0.1s ease-in-out
+            }
+
+    .msg div {
+      background: #1c201b;
+      border: none;
+      box-shadow: 0 0 10px #49495f;
+      border-radius: 20px;
+      max-width: 600px;
+    }
+
+    .box {
+        border: none;
+        box-shadow: 0 0 10px #49495f;
+        border-radius: 20px;
+        width: 90%;
+        flex-wrap: nowrap;
+        display: flex;
+        flex-direction: row;
+        padding: 1% 4%;
+        margin-bottom: 3%;
+        background-color:transparent;
+        align-items: center;
+        transition: all 0.2s ease-in-out;
+    }
+
+        
+    </style>
+</head>
+<body>
+    <div id="msg" class="center msg">
+    <div id="box" class="box">
+    </div>    
+    </div>
+    <div class="logo">Carbon Share</div>
+    <div class="container" id="container">
+
+        <form class="form" id="login-form">
+                <h2>Login</h2>
+
+                <div class="input-container">
+                    <input id="name" type="text" required placeholder=" ">
+                    <label>Username</label>
+                </div>
+
+                <div class="input-container">
+                    <input id="pass" type="password" required placeholder=" ">
+                    <label>Password</label>
+                </div>
+
+                <button type="button" id="lbt" onclick="login()">Login</button>
+        </form>
+
+    </div>
+    <div class="center" id="updates" style="position: fixed; top:0%; left:0%; z-index: 50; backdrop-filter: blur(10px); width:100%; height: 100%;">
+        <div class="msgbox">
+         <div class="right">
+           <i class="fas fa-times-circle" onclick="updates('remove', null)"></i>
+         </div>
+         <div id="body" class="center"> 
+         </div>
+        </div>
+       </div>
+    
+    <script>
+  
+        const container = document.getElementById('container');
+        let usr = null;
+        const Default = `<div>
+            <div id="default">
+
+            </div>
+            <h1 style="color: #ebebeb; font-size: 20px; font-weight: 400;">Processing</h1>
+          </div>`;
+
+
+        let state = null
+         
+        function updates(type, data) {
+            let box = document.getElementById("updates");
+            let semi_box = document.getElementById("body");
+            if(type == "add") {
+                box.style.transform="translateX(0%)";
+                semi_box.innerHTML="";
+                semi_box.innerHTML=data;
+            } else {
+                box.style.transform="translateX(250%)";
+            }
+        }
+
+        function msg(message, type) {
+            let box = document.getElementById("msg");
+            let msg = document.getElementById("box");
+            msg.style.border = "2px solid #56c33e";
+            box.style.scale = "1";
+            msg.innerHTML = "";
+            msg.innerHTML = `<h1>${message}</h1>`
+            if (type === "error") {
+                msg.style.border = "2px solid #c33e3e"
+            }
+            setTimeout(() => {
+                box.style.scale = "0";
+            }, 3000);
+            }
+
+        function switchToLogin() {
+            state="login"
+        }
+
+        function login() {
+            let name = document.getElementById("name").value;
+            let key = document.getElementById("pass").value;
+
+            if (name && key) {
+                updates("add", Default);
+                loader("add", "default")
+                    
+                fetch("/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username : name ,key: key })
+                })
+                .then(response => response.json())
+                .then(json => {
+    
+                    if (json == 200) {
+                          updates("remove", null)
+                          loader("remove", "default")
+                          location.reload();
+                    } else {
+                        updates("remove", null)
+                        loader("remove", "default")
+                        msg("Invalid Password", "error")
+                    }
+                }) 
+                .catch((error) => {
+                
+                    updates("remove", null)
+                    loader("remove", "default")
+                    msg("Share is Down!", "error");
+
+                });
+            } 
+         }   
+        
+
+        function loader(state, id) {
+        const box = document.getElementById(id);
+        const html = `
+       <div class="loader" id="loader">
+        <div>
+         <span class="center">
+         <div id="spinner">
+            <div id="b1">
+            </div>
+            <div id="b2">
+            </div> 
+            </div>    
+         </span>
+        </div>           
+       </div>`;
+        if(state != "add") {
+          const loader = document.getElementById("loader");
+          loader.remove()
+        } else {
+          box.innerHTML="";
+          box.innerHTML+=html;
+        }
+        }
+
+         switchToLogin()
+        
+
+    </script>
+</body>
+</html>

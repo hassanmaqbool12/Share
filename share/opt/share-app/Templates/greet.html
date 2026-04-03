@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="{{url_for('static', filename='fontawesome/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{url_for('static', filename='fontawesome/css/brands.css') }}">
+
+  <meta charset="UTF-8">
+  <title>Carbon Share</title>
+  <link rel="icon" href="{{url_for('static', filename='icon.svg') }}">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background:#222226;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+
+    .head {
+      position: absolute;
+      top: 2%;
+      width: 100%;
+      background-color: transparent
+    }
+
+    .head h2 {
+      color: #e9eff0;
+      font-size: 190%;
+      margin-left: 2%;
+      font-weight: 400;
+    }
+
+    .header {
+      width: 100%;
+      top:0%;
+    }
+
+    .header h2 {
+      color: #e9eff0;
+      font-size: 190%;
+      margin-left: 2%;
+      font-weight: 400;
+    }
+
+    .main {
+      width: 90%;
+      padding: 1% 0% 1% 0%;
+      scale: 0.9;
+      max-width: 600px;
+      display: flex;
+      border-radius: 20px;
+      top: 0%;
+      box-shadow:0 0 6px black;
+      background: #292935;
+      height: 100%
+    }
+
+
+    .left {
+      width: 100%;
+      display: flex;
+      justify-content: left;
+      align-items: center
+    }
+
+    .center {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center
+    }
+
+    .right {
+      width: 100%;
+      display: flex;
+      justify-content: right;
+      align-items: center
+    }
+
+    .bottom {
+      position: fixed;
+      bottom: 6px;
+      right: 6px;
+      max-width: 180px;
+      border-radius: 20px;
+      padding: 0px;
+      background: #292935;
+      transition: all 0.1s ease-in-out;
+    }
+
+    .bottom button {
+      box-shadow: none;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      background-color: transparent;
+    }
+
+    .bottom button:active {
+      background-color: white;
+      color: black;
+    }
+
+    button {
+      width: 80%;
+      padding: 8px 4px;
+      margin-top: 5px;
+      margin-right: 10px;
+      margin-left: 10px;
+      background: #292935;
+      border: none;
+      border-radius: 20px;
+      box-shadow:0 0 6px black;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.1s ease-out
+    }
+
+    button:active {
+
+      transform: translateY(3px);
+      box-shadow: none;
+      color: #222226;
+      background: white;
+    }
+
+    .msg {
+      position: absolute;
+      top: 0%;
+      width: 100%;
+      height: fit-content;
+      left: 0%;
+      scale: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 10px;
+      z-index: 15;
+      transition: all 0.1s ease-in-out
+    }
+
+    .msg div {
+      border:2px solid #49495f;
+      box-shadow:none;
+      background-color: #222226;
+      border-radius: 20px;
+      padding: 16px;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .msg h1 {
+      color: #ebebeb;
+      font-weight: 400;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .input {
+      font-size: 0px;
+      display: none;
+    }
+
+    .main-box {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      justify-content: start;
+      padding: 10px 12px;
+      width: 100%;
+      background-color:transparent;
+    }
+
+    .exploler {
+      display: flex;
+      align-items: center;
+      justify-content:center;
+      gap: 20px;
+      flex-wrap: wrap;
+      overflow-y: scroll;
+      height: 100%;
+      padding: 65px 12px;
+      padding-top: 0px;
+      width: 100%;
+      background-color:transparent;
+    }
+
+    .element {
+      max-width: 300px;
+      border-bottom: 1px solid #49495f;
+      border-radius:0px;
+      width: 95%;
+      flex-wrap: nowrap;
+      display: flex;
+      flex-direction: row;
+      padding: 2px;
+      margin-bottom: 6px;
+      justify-content: center;
+      background-color:#222226;
+      align-items: center;
+      transition: all 0.1s ease-in-out;
+      animation: forBox 2s ease-in-out;
+    }
+
+    .element p {
+      font-size: 17px;
+      margin-bottom: 5%;
+      color: rgb(218, 213, 208);
+      margin-left: 1%;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 200px;
+      text-overflow: ellipsis;
+    }
+
+    .element i {
+      font-size: 180%;
+      color: rgb(228, 228, 228);
+    }
+
+    .element .i {
+      font-size: 18px;
+      color: rgb(228, 228, 228);
+      margin-right: 10%;
+
+    }
+    
+    @media (min-width: 768px) {
+          .exploler {
+            justify-content: start;
+          }  
+
+          .bottom button:hover {
+            background-color: white;
+            color: black;
+          }
+
+          .element {
+            max-width: 400px;
+          }
+
+          .element:hover {
+            border-bottom:1px solid #d6d6d6;
+          }
+        }
+
+    @keyframes forBox {
+      form {
+        opacity: 0;
+      } to {
+        opacity: 1;
+      }
+      
+    }
+
+    .box {
+      border: 1px solid #49495f;
+      border-radius: 20px;
+      width: 95%;
+      max-width: 600px;
+      flex-wrap: nowrap;
+      display: flex;
+      flex-direction: row;
+      padding: 1%;
+      margin-bottom: 3%;
+      justify-content: center;
+      background-color:#222226;
+      align-items: center;
+      transition: all 0.1s ease-in-out;
+      animation: forBox 2s ease-in-out;
+    }
+
+    .box:active {
+      transform: translateY(3px);
+      box-shadow: none;
+      background-color: #d6d4d4;
+    }
+
+    .box p {
+      font-size: 17px;
+      margin-bottom: 5%;
+      color: rgb(218, 213, 208);
+      margin-left: 1%;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 200px;
+      text-overflow: ellipsis;
+    }
+
+    .box i {
+      font-size: 180%;
+      color: rgb(228, 228, 228);
+    }
+
+    .box .i {
+      font-size: 18px;
+      color: rgb(228, 228, 228);
+      margin-right: 10%;
+
+    }
+
+    .file {
+      font-size: 35px;
+      margin-left: 4%;
+      color: rgb(178, 157, 255);
+      padding: 3%;
+    }
+
+    .Body {
+      position: absolute;
+      bottom: 0%;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      background: transparent;
+      padding: 0%;
+    }
+
+    .side {
+      position: fixed;
+      top: 0%;
+      left: 0%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color:#222226;
+      scale: 0;
+      opacity: 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    #video {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+    }
+
+    .image {
+      border-radius: 20px;
+      object-fit: cover;
+      width: 100%;
+      height: auto;
+    }
+
+    .audio {
+      width: 100%;
+    }
+
+    .menu {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      padding: 12% 10%;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .button {
+      background-color:transparent;
+      font-size: 250%;
+      color: white;
+      width: 45%;
+      padding: 6% 3%;
+      height: 100%;
+      justify-content: center;
+      border-radius: 20px;
+      box-shadow:0 0 6px #080808;
+      transition: all 0.1s ease-in-out;
+    }
+
+    .button:active {
+      transform: translateY(3px);
+      box-shadow: none;
+    }
+
+    .updates {
+      position: fixed;
+      top: 0%;
+      width: 100%;
+      max-width: 600px;
+      scale: 0;
+      height: 100%;
+      z-index: 19;
+      backdrop-filter: blur(6px);
+      transition: all 0.1s ease-in-out;
+    }
+
+    .body {
+      flex-direction: column;
+    }
+
+    .body div {
+      flex-direction: column;
+    }
+
+    .body h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 10%;
+    }
+
+    .body button {
+      padding: 8% 0%;
+      font-size: 25px;
+    }
+
+    .body input {
+      background-color: transparent;
+      border: 2px solid #d6d6d6;
+      color: grey;
+      font-size: 16px;
+      font-weight: 400;
+      width: 100%;
+      padding: 6%;
+      border-radius: 10px;
+      margin: 6% 0%;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .body input:focus {
+      outline: none;
+      box-shadow: 0 0 10px black;
+      background-color: #ebebeb;
+    }
+
+    .msgbox {
+      background-color:#222226;
+      border: none;
+      box-shadow:0 0 4px #6e6eaf;
+      width: 70%;
+      max-width: 500px;
+      z-index: 9;
+      height: auto;
+      max-height: 80%;
+      border-radius: 10px;
+      padding: 8% 2%;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .msgbox i {
+      color: #d6d4d4;
+    }
+
+    .text {
+      width: 90%;
+      background-color: #202029;
+      height: 80%;
+      border: none;
+      border-radius: 20px;
+      color: rgb(224, 221, 221);
+      padding: 4%;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 24px;
+      transform: translateY(3px);
+      transition: all 0.2s ease-in-out;
+    }
+
+    textarea:focus {
+      outline: none;
+      transform: translateY(-6px);
+      box-shadow: 0px 0px 10px black;
+    }
+
+    #progressPage {
+      position: absolute;
+      top: 0%;
+      width: 100%;
+      height: fit-content;
+      left: 0%;
+      scale: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 10px;
+      z-index: 15;
+      transition: all 0.1s ease-in-out
+    }
+
+    .progress {
+      background-image: linear-gradient(140deg, #6e6eaf, rgb(226, 162, 255));
+      width: 60%;
+      height: 100%;
+      border-radius: 30px;
+      padding: 0%;
+      margin: 0%;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .progressParent {
+      background-color: rgb(192, 213, 216);
+      width: 85%;
+      height: 30px;
+      border-radius: 30px;
+      padding: 0%;
+      margin: 0%;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .textLoad {
+      color: white;
+      font-size: 20px;
+    }
+
+    .Body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .explore {
+      width: 90%;
+      height: fit-content;
+      box-shadow:0 0 6px black;
+      border: 1px solid #49495f;
+      border-radius: 20px;
+      padding: 18px;
+      background-color: transparent;
+    }
+
+    .head h1 {
+      color: #ebebeb;
+      font-size: 230%;
+      margin: 0% 2%;
+    }
+
+    .intrests {
+      width: 80%;
+    }
+
+    .boxes {
+      margin-top:2%;
+      animation: show 0.4s ease-in-out;
+    }
+
+    @keyframes show {
+      0% {
+        opacity: 0;
+      } 100% {
+        opacity: 1;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="Body" id="user">
+    <div class="left head">
+      <h1>Carbon Share</h1>
+    </div>
+    <div class="explore" style="max-width: 550px;">
+      <div class="center" style="justify-content: space-between;margin-bottom: 4%">
+        <button class="button center fas fa-folder" onclick="FilePage()"></button>
+        <button class="button center fas fa-clipboard" onclick="clipboard()"></button>
+      </div>
+      <div class="center" style="justify-content: space-between;margin-bottom: 4%">
+        <button class="button center fas fa-sign-out-alt" onclick="logout()"></button>
+        <button class="button center fas fa-power-off" onclick="turnoff()"></button>
+      </div>
+    </div>
+  </div>
+  <div id="msg" class="msg">
+    <div id="box" class="box left" style="justify-content: left;">
+    </div>
+  </div>
+  <div id="progressPage" >
+    <div id="progressBox" class="box center" style="padding: 0%;">
+      <div class="center" style="justify-content:space-between;padding: 3%;flex-direction: row;">
+        <div class="progressParent">
+        <div class="progress" id="bar"></div>
+        </div>
+        <h3 class="textLoad" id="bartext">0%</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="side" id="side">
+  </div>
+  <div class="side" id="Side"></div>
+  <div class="center updates" id="updates">
+    <div class="msgbox">
+      <div id="Body" class="center"></div>
+
+    </div>
+  </div>
+
+  <input type="file" id="file" class="input" multiple name="files[]">
+  <script>
+
+    let path = {{ data | tojson }}
+    let Name = null;
+    let path_list = ["Home"]
+    let isOn = false
+    let isOn2 = false
+
+    history.pushState({ page: "home" }, "")
+
+    function loader(state, id) {
+        const box = document.getElementById(id);
+        const html = `
+       <div class="loader" id="loader">
+        <div>
+         <span class="center">
+         <div id="spinner">
+            <div id="b1">
+            </div>
+            <div id="b2">
+            </div> 
+            </div>    
+         </span>
+        </div>           
+       </div>`;
+        if(state != "add") {
+          const loader = document.getElementById("loader");
+          loader.remove()
+        } else {
+          box.innerHTML="";
+          box.innerHTML+=html;
+        }
+        }
+
+
+    async function sendData(url, data) {
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ data: data })
+      })
+        .then(response => response.json())
+        .then(server => {
+          if (server === 200) {
+            msg("Clipboard Sent!", "ok")
+            closePage()
+          } else {
+            msg("Something Went Wrong!", "error")
+          }
+        })
+        .catch(error => {
+          msg("Connection Issue!", "error")
+        })
+    }
+
+    async function sendClip() {
+      let box = document.getElementById("textclip").value
+      if (box) {
+        let text = btoa(unescape(encodeURIComponent(box)))
+        let server = sendData("/clipboard/copy", text)
+      } else {
+        msg("Dear User, Its Empty", "error")
+      }
+    }
+
+    async function turnoff() {
+      let user = await sure("Stop Carbon-Share?")
+      if (user === true) {
+        let data = await fetchData("/action/off")
+        if (data && data !== 404) {
+          msg("Can't Stop", "error")
+        } else {
+          msg("Carbon Share Stopped", "ok")
+          window.location.href = '/'
+        }
+      } else {
+
+      }
+    }
+
+    async function logout() {
+      let user = await sure("Logout from this device?")
+      if (user === true) {
+        let data = await fetchData("/logout")
+        if (data && data == 200) {
+          msg("Logout was sucessful", "ok")
+          window.location.href = "/"
+        } else {
+          msg("Server Error", "error")
+        }
+      } else { }
+    }
+
+    function updates(type, data) {
+      let box = document.getElementById("updates");
+      let semi_box = document.getElementById("Body");
+      if (type == "add") {
+        semi_box.innerHTML = "";
+        semi_box.innerHTML = data;
+        box.style.scale = "1";
+        history.pushState({ page: "updates" }, "")
+      } else {
+        box.style.scale = "0";
+      }
+    }
+
+    function FilePage() {
+      let html = `
+      <div class="center main-box" style="flex-direction:column ;">
+      <div class="left header">
+        <h2 id="head">Files</h2>
+      </div>
+      <div class="center exploler" id="exploler" style='height:auto'>
+
+      </div>
+    </div>
+    <div class="center bottom">
+      <button onclick="Home()" class="fas fa-home"></button>
+      <button onclick="opeN()" class="fas fa-upload"></button>
+    </div>`
+      page(html)
+      oPen('')
+    }
+
+    function clipboard() {
+      let html = `
+      <div class="main center" style="flex-direction:column ;">
+      <div class="left head">
+        <h2 id="head">Clipboard</h2>
+      </div>
+      <textarea type="text" class="left text" id="textclip" multiline=true placeholder="Paste Text Here"></textarea>
+    </div>
+    <div class="center">
+      <button onclick="sendClip()" class="fas fa-paper-plane" style="font-size:24px"></button>
+    </div>`
+      page(html)
+    }
+
+    function page(data) {
+      let box = document.getElementById("side")
+      box.innerHTML = ""
+      box.innerHTML = data
+      box.style.opacity = "1"
+      box.style.scale = "1"
+      isOn = true
+      history.pushState({ page: "page" }, "")
+    }
+
+    function Page(data) {
+      let box = document.getElementById("Side")
+      box.innerHTML = ""
+      box.innerHTML = data
+      box.style.opacity = "1"
+      box.style.scale = "1"
+      isOn2 = true
+      history.pushState({ page: "page" }, "")
+    }
+
+    function mediaPage(data) {
+      let box = document.getElementById("side")
+      let html = ``;
+      if (data[0] === "fas fa-video") {
+        html += `
+            <div class="center main" style="padding: 4%;">
+            <video controls id="video" src='${data[1]}'></video>
+            </div>
+            <div class="center bottom">
+            <button onclick="download('${data[2]}')" class="fas fa-download"></button>
+            <button onclick="Delete('${data[2]}')" class="fas fa-trash"></button>
+            </div> `
+        Page(html)
+      } else if (data[0] === "fas fa-image") {
+        html += `
+            <div class="center main" style="padding: 4%;">
+            <img src='${data[1]}' class="image">
+            </div>
+            <div class="center bottom">
+            <button onclick="download('${data[2]}')" class="fas fa-download"></button>
+            <button onclick="Delete('${data[2]}')" class="fas fa-trash"></button>
+            </div> `
+        Page(html)
+        isOn = true
+      } else if (data[0] === "fas fa-music") {
+        html += `
+            <div class="center main" style="padding: 4%;">
+            <audio controls class="audio">
+              <source src='${data[1]}' type='audio/mp3'>
+            </audio>
+            </div>
+            <div class="center bottom">
+            <button onclick="download('${data[2]}')" class="fas fa-download"></button>
+            <button onclick="Delete('${data[2]}')" class="fas fa-trash"></button>
+            </div> `
+        Page(html)
+      } else { }
+    }
+
+    async function play(name) {
+      let data = await fetchData("/url/" + path + "/" + name)
+      if (data !== 404) {
+        mediaPage(data)
+      }
+    }
+
+    async function Home() {
+      path = localStorage.getItem("path") || "/home"
+      startFiles()
+    }
+
+    async function back() {
+      if(path_list.length == 1) {return}
+
+      let state = await fetchData("/back" + path);
+
+      if (state !== "404") {
+        path_list.pop(path_list[path_list.length - 1])
+        let newData = path_list[path_list.length - 1]
+        if(newData === "undefined" || "" || null) {
+           let head = document.getElementById("head").innerText =  "Files"
+        } else {
+           let head = document.getElementById("head").innerText =  newData
+        }
+        folder(state.data, state.path)
+      } else {
+        msg("Access Denied", "error")
+      }
+    }
+
+    async function Delete(name) {
+      let user = await sure("Delete This File?")
+      if (user === true) {
+        let state = await fetchData("/delete" + path + "/" + name);
+        if (state !== "404") {
+          folder(state.data, state.path)
+          msg("File Deleted!", "ok")
+          closePage2()
+        } else {
+          msg("Access Denied", "error")
+        }
+      } else { }
+    }
+
+    async function download(name) {
+      let data = "/download" + path + "/" + name;
+      let a = document.createElement("a");
+      a.href = data;
+      a.download = name;
+      a.click()
+      msg("File Received.")
+
+    }
+
+    function closePage() {
+      let box = document.getElementById("side")
+      box.style.scale = "0"
+      box.innerHTML = ""
+      isOn = false
+    }
+
+    function closePage2() {
+      let box = document.getElementById("Side")
+      box.style.scale = "0"
+      box.innerHTML = ""
+      isOn2 = false
+    }
+
+    async function fetchData(url) {
+      try {
+        let response = await fetch(url);
+        if (response) {
+          return await response.json();
+        } else {}
+      } catch (error) {
+        msg(name+" is offline", "error")
+        return null;
+      }
+    }
+
+    async function oPen(name) {
+      loader('add', 'exploler')
+      let data = await fetchData("/files" + path + "/" + name);
+      if (data !== "404") {
+        Name = name
+        loader('add', 'exploler')
+        folder(data, path + "/" + name)
+        if(name != '') path_list.push(name)
+        let head = document.getElementById("head").innerText = path_list[path_list.length - 1]
+        history.pushState({ page: name }, "")
+      } else {
+        msg("Empty Folder", "error")
+      }
+    }
+
+    async function refresh() {
+      let data = await fetchData("/files/" + path);
+      if (data !== "404") {
+        Name = name
+        folder(data, path)
+      } else {
+        msg("Empty Folder", "error")
+      }
+    }
+
+    function sure(text) {
+      return new Promise((resolve) => {
+        let html = `
+                <div class="intrests">
+            
+                <div class="center body">
+                <div class="center">
+                <h3 class="center">${text}</h3>
+                </div>
+                <div class="center" style="margin-top:3%; flex-direction:row;">
+                  <button class="button red fas fa-times" id="cancel"></button>
+                  <button  class="button fas fa-check" style="margin-left:6%" id="ok"></button>
+                </div>
+                </div> `
+        updates("add", html)
+        document.getElementById("ok").addEventListener("click", () => {
+          updates("remove")
+          resolve(true)
+        })
+        document.getElementById("cancel").addEventListener("click", () => {
+          updates("remove")
+          resolve(false)
+        })
+
+      })
+    }
+
+    function getInput(text) {
+      return new Promise((resolve) => {
+        let html = `
+                <div class="intrests">
+            
+                <div class="center body">
+                <div class="center">
+                <h3 class="left">${text}</h3>
+                </div>
+                <div class="center">
+                  <input type="text" id="input">
+                </div>
+                <div class="center" style="margin-top:3%; flex-direction:row;">
+                  <button class="button red fas fa-times" id="cancel"></button>
+                  <button  class="button fas fa-check" style="margin-left:6%" id="ok"></button>
+                </div>
+                </div> `
+        updates("add", html)
+        document.getElementById("ok").addEventListener("click", () => {
+          resolve(document.getElementById("input").value)
+          updates("remove")
+        })
+        document.getElementById("cancel").addEventListener("click", () => {
+          updates("remove")
+          resolve(false)
+        })
+
+      })
+    }
+
+    window.addEventListener("popstate", function (event) {
+        let state = event.state.page;
+
+        if (isOn2 === true) {
+          closePage2()
+        } else if (isOn === true && path_list.length == 1) {
+          closePage()
+        } else {
+          back()
+        }
+
+    });
+
+    function folder(data, paTh) {
+      let box = document.getElementById("exploler");
+      path = "";
+      path = paTh
+      box.innerHTML = "";
+      let count = 0;
+      let length_of_data = 0;
+      if(data.length > 20) {length_of_data += 10} // For Lag issue
+      else {length_of_data += data.length}
+      data.forEach(element => {
+        const [type, name] = element;
+        count += 1;
+        let html = ``
+        if (type === "folder") {
+          html += `  
+              <div class="center boxes element" onclick="oPen('${name}')">
+              <div class="left">
+              <i class="fas fa-folder file" style="color:#eeff55"></i>
+              <p style="margin:5% ">${name}</p>
+              </div>
+             </div>`
+        } else {
+          html += `
+              <div class="center boxes element">
+              <div class="left" onclick="play('${name}')">
+              <i class="${type} file" style="padding:6%"></i>
+            <p style="margin:5% ">${name}</p>
+            </div>
+            <div class="right" style="margin-right:2%">
+              <i class="i fas fa-arrow-down" style="margin-right:16%" onclick="download('${name}')"></i>
+              <i class="i fas fa-trash" onclick="Delete('${name}')"></i>
+            </div>
+            </div>`
+        }
+        if(length_of_data => count) {box.innerHTML += html;}
+      })
+    }
+
+    function msg(message, type) {
+      let box = document.getElementById("msg");
+      let msg = document.getElementById("box");
+      msg.style.border = "1px solid green";
+      box.style.scale = "1";
+      msg.innerHTML = "";
+      msg.innerHTML = `<h1>${message}</h1>`
+      if (type === "error") {
+        msg.style.border = "1px solid red"
+      }
+      setTimeout(() => {
+        box.style.scale = "0";
+      }, 3000);
+    }
+
+    function progressFile(data) {
+      let box = document.getElementById("progressPage");
+      let msg = document.getElementById("progressBox");
+      box.style.scale = "1";
+      showProgress(data)
+      if (data === 100) {
+        box.style.scale = "0"
+        msg("File Uploaded!")
+      }
+    }
+
+    function opeN() {
+      let box = document.getElementById("file");
+      box.click()
+    }
+
+    document.getElementById("file").addEventListener("change", (e) => {
+      if (e.target.files.length > 0) {
+        upload()
+      }
+    })
+
+    function showProgress(data) {
+      document.getElementById("bar").style.width = data+"%"
+      document.getElementById("bartext").innerHTML = data + "%"
+    }
+
+    async function upload() {
+      msg("Uploading File", "ok")
+      let box = document.getElementById("file");
+      if (box.files[0]) {
+        const form = new FormData();
+        form.append("path", path)
+        for (const file of box.files) {
+          form.append("files[]", file)
+        }
+        const xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", (event) => {
+          let percent = Math.round((event.loaded / event.total) * 100)
+          progressFile(percent)
+        })
+
+        xhr.onload = function () {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            if (xhr.responseText !== 200) { }
+          }
+        }
+        await xhr.open("POST", "/upload", true)
+        await xhr.send(form)
+        xhr.onload = function () {
+          msg("File Uploaded and Saved!")
+          refresh()
+        }
+      } else {
+
+      }
+
+    }
+
+  </script>
+</body>
+
+</html>

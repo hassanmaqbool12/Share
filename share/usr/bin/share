@@ -1,0 +1,6 @@
+#!/bin/bash
+# Launches the Share app Python script
+
+cd /opt/share-app
+
+"python3" "Share.py"
