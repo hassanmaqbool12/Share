@@ -16,4 +16,4 @@ For Debian and Ubuntu based systems, a packaged build is also included as `Carbo
 
 For full implementation details, flow notes, and function-by-function documentation, see `notes.txt`.
 
-This text is written by OpenAI Codex.
+This text is written by OpenAI Codex. But this F*cking project is written by me. 
