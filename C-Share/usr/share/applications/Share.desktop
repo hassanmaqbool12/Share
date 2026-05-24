@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=Carbon-Share
+Exec=/usr/bin/cshare
+Type=Application
+Comment=Share files easily
+Categories=Network;Utility;
+Terminal=false
+Icon=emblem-shared
+StartupWMClass=cshare
+
