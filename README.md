@@ -18,4 +18,4 @@ For Debian and Ubuntu based systems, a packaged build is also included as `Carbo
 
 For full implementation details, flow notes, and function-by-function documentation, see `notes.txt`.
 
-This text is written by OpenAI Codex. But this F*cking project is written by me. 
+Its next version is upcoming and it will include much more secure API endpoints, This version uses Flask session and the next one would also use auth token method for each API call.
